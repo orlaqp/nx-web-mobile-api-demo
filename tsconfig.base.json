@@ -27,6 +27,9 @@
       "@nx-web-mobile-api-demo/customer/web-feature": [
         "libs/customer/web-feature/src/index.ts"
       ],
+      "@nx-web-mobile-api-demo/navigation/web-feature": [
+        "libs/navigation/web-feature/src/index.ts"
+      ],
       "@nx-web-mobile-api-demo/order/api": ["libs/order/api/src/index.ts"],
       "@nx-web-mobile-api-demo/order/data-access": [
         "libs/order/data-access/src/index.ts"

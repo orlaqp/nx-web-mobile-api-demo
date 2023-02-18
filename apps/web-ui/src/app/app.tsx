@@ -1,15 +1,19 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.css';
+import * as React from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { MainNavigation } from '@nx-web-mobile-api-demo/navigation/web-feature';
+import { Box } from '@mui/material';
 
-import NxWelcome from './nx-welcome';
+const mdTheme = createTheme();
 
 export function App() {
   return (
-    <>
-      <NxWelcome title="web-ui" />
-
-      <div />
-    </>
+    <ThemeProvider theme={mdTheme}>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <MainNavigation />
+      </Box>
+    </ThemeProvider>
   );
 }
 
