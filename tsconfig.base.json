@@ -14,7 +14,35 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@nx-web-mobile-api-demo/customer/data-access": [
+        "libs/customer/data-access/src/index.ts"
+      ],
+      "@nx-web-mobile-api-demo/customer/mobile-feature": [
+        "libs/customer/mobile-feature/src/index.ts"
+      ],
+      "@nx-web-mobile-api-demo/customer/web-feature": [
+        "libs/customer/web-feature/src/index.ts"
+      ],
+      "@nx-web-mobile-api-demo/order/data-access": [
+        "libs/order/data-access/src/index.ts"
+      ],
+      "@nx-web-mobile-api-demo/order/mobile-feature": [
+        "libs/order/mobile-feature/src/index.ts"
+      ],
+      "@nx-web-mobile-api-demo/order/web-feature": [
+        "libs/order/web-feature/src/index.ts"
+      ],
+      "@nx-web-mobile-api-demo/product/data-access": [
+        "libs/product/data-access/src/index.ts"
+      ],
+      "@nx-web-mobile-api-demo/product/mobile-feature": [
+        "libs/product/mobile-feature/src/index.ts"
+      ],
+      "@nx-web-mobile-api-demo/product/web-feature": [
+        "libs/product/web-feature/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
