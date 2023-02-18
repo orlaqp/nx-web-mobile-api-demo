@@ -46,7 +46,8 @@
       ],
       "@nx-web-mobile-api-demo/product/web-feature": [
         "libs/product/web-feature/src/index.ts"
-      ]
+      ],
+      "@nx-web-mobile-api-demo/shared/store": ["libs/shared/store/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
