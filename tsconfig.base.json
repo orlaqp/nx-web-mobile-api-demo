@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@nx-web-mobile-api-demo/customer/api": [
+        "libs/customer/api/src/index.ts"
+      ],
       "@nx-web-mobile-api-demo/customer/data-access": [
         "libs/customer/data-access/src/index.ts"
       ],
@@ -24,6 +27,7 @@
       "@nx-web-mobile-api-demo/customer/web-feature": [
         "libs/customer/web-feature/src/index.ts"
       ],
+      "@nx-web-mobile-api-demo/order/api": ["libs/order/api/src/index.ts"],
       "@nx-web-mobile-api-demo/order/data-access": [
         "libs/order/data-access/src/index.ts"
       ],
@@ -33,6 +37,7 @@
       "@nx-web-mobile-api-demo/order/web-feature": [
         "libs/order/web-feature/src/index.ts"
       ],
+      "@nx-web-mobile-api-demo/product/api": ["libs/product/api/src/index.ts"],
       "@nx-web-mobile-api-demo/product/data-access": [
         "libs/product/data-access/src/index.ts"
       ],
