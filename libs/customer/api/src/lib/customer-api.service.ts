@@ -1,5 +1,7 @@
 import { InMemoryDBService } from '@nestjs-addons/in-memory-db';
 import { Injectable } from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { Customer } from './customer.dto';
 import { CustomerEntity } from './customer.entity';
 
 @Injectable()
@@ -8,8 +10,8 @@ export class CustomerApiService {
     private readonly customerService: InMemoryDBService<CustomerEntity>
   ) {}
 
-  findAll() {
-    return this.customerService.getAll();
+  findAll(): Observable<Customer[]> {
+    return this.customerService.getAllAsync();
   }
 
   create(entity: Partial<CustomerEntity>) {
