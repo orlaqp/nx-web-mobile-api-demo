@@ -1,3 +1,4 @@
+import { RootState } from '@nx-web-mobile-api-demo/shared/store';
 import {
   createAsyncThunk,
   createEntityAdapter,
@@ -18,7 +19,7 @@ export interface ProductEntity {
 
 export interface ProductState extends EntityState<ProductEntity> {
   loadingStatus: 'not loaded' | 'loading' | 'loaded' | 'error';
-  error: string;
+  error?: string | null;
 }
 
 export const productAdapter = createEntityAdapter<ProductEntity>();
@@ -127,7 +128,7 @@ export const productActions = productSlice.actions;
  */
 const { selectAll, selectEntities } = productAdapter.getSelectors();
 
-export const getProductState = (rootState: unknown): ProductState =>
+export const getProductState = (rootState: RootState): ProductState =>
   rootState[PRODUCT_FEATURE_KEY];
 
 export const selectAllProduct = createSelector(getProductState, selectAll);

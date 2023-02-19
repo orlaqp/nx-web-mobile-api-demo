@@ -1,12 +1,33 @@
+import { List, ListItem, ListItemText } from '@mui/material';
+import {
+  fetchCustomers,
+  selectAllCustomers,
+  selectCustomers,
+} from '@nx-web-mobile-api-demo/customer/data-access';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 /* eslint-disable-next-line */
 export interface CustomersProps {}
 
 export function Customers(props: CustomersProps) {
+  const dispatch = useDispatch();
+  const customers = useSelector(selectAllCustomers);
+  useEffect(() => { dispatch(fetchCustomers() as any) }, []);
+
   return (
-    <div>
-      <h1>Welcome to Customers!</h1>
-    </div>
+
+    <List>
+      { customers?.map(c => (
+        <ListItem>
+          <ListItemText
+            primary={`${c.firstName} ${c.lastName}`}
+            secondary={c.emailAddress}
+          />
+        </ListItem>
+      ))}
+    </List>
+    
   );
 }
 

@@ -1,3 +1,4 @@
+import { RootState } from '@nx-web-mobile-api-demo/shared/store';
 import {
   createAsyncThunk,
   createEntityAdapter,
@@ -18,7 +19,7 @@ export interface OrderEntity {
 
 export interface OrderState extends EntityState<OrderEntity> {
   loadingStatus: 'not loaded' | 'loading' | 'loaded' | 'error';
-  error: string;
+  error?: string | null;
 }
 
 export const orderAdapter = createEntityAdapter<OrderEntity>();
@@ -125,7 +126,7 @@ export const orderActions = orderSlice.actions;
  */
 const { selectAll, selectEntities } = orderAdapter.getSelectors();
 
-export const getOrderState = (rootState: unknown): OrderState =>
+export const getOrderState = (rootState: RootState): OrderState =>
   rootState[ORDER_FEATURE_KEY];
 
 export const selectAllOrder = createSelector(getOrderState, selectAll);

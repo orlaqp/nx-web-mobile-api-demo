@@ -1,3 +1,5 @@
+import { Customer, CustomersApi } from '@nx-web-mobile-api-demo/shared/api-client';
+import { RootState } from '@nx-web-mobile-api-demo/shared/store';
 import {
   createAsyncThunk,
   createEntityAdapter,
@@ -12,16 +14,15 @@ export const CUSTOMER_FEATURE_KEY = 'customer';
 /*
  * Update these interfaces according to your requirements.
  */
-export interface CustomerEntity {
-  id: number;
-}
 
-export interface CustomerState extends EntityState<CustomerEntity> {
+export interface CustomerState extends EntityState<Customer> {
   loadingStatus: 'not loaded' | 'loading' | 'loaded' | 'error';
-  error: string;
+  error?: string | null;
 }
 
-export const customerAdapter = createEntityAdapter<CustomerEntity>();
+export const customerAdapter = createEntityAdapter<Customer>();
+
+const api = new CustomersApi(undefined, 'http://localhost:3333/api');
 
 /**
  * Export an effect using createAsyncThunk from
@@ -40,15 +41,11 @@ export const customerAdapter = createEntityAdapter<CustomerEntity>();
  * }, [dispatch]);
  * ```
  */
-export const fetchCustomer = createAsyncThunk(
+export const fetchCustomers = createAsyncThunk(
   'customer/fetchStatus',
   async (_, thunkAPI) => {
-    /**
-     * Replace this with your custom fetch call.
-     * For example, `return myApi.getCustomers()`;
-     * Right now we just return an empty array.
-     */
-    return Promise.resolve([]);
+    const res = await api.customerApiControllerSearch();
+    return res.data;
   }
 );
 
@@ -68,17 +65,17 @@ export const customerSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCustomer.pending, (state: CustomerState) => {
+      .addCase(fetchCustomers.pending, (state: CustomerState) => {
         state.loadingStatus = 'loading';
       })
       .addCase(
-        fetchCustomer.fulfilled,
-        (state: CustomerState, action: PayloadAction<CustomerEntity[]>) => {
+        fetchCustomers.fulfilled,
+        (state: CustomerState, action: PayloadAction<Customer[]>) => {
           customerAdapter.setAll(state, action.payload);
           state.loadingStatus = 'loaded';
         }
       )
-      .addCase(fetchCustomer.rejected, (state: CustomerState, action) => {
+      .addCase(fetchCustomers.rejected, (state: CustomerState, action) => {
         state.loadingStatus = 'error';
         state.error = action.error.message;
       });
@@ -126,12 +123,12 @@ export const customerActions = customerSlice.actions;
  */
 const { selectAll, selectEntities } = customerAdapter.getSelectors();
 
-export const getCustomerState = (rootState: unknown): CustomerState =>
+export const getCustomerState = (rootState: RootState): CustomerState =>
   rootState[CUSTOMER_FEATURE_KEY];
 
-export const selectAllCustomer = createSelector(getCustomerState, selectAll);
+export const selectAllCustomers = createSelector(getCustomerState, selectAll);
 
-export const selectCustomerEntities = createSelector(
+export const selectCustomers = createSelector(
   getCustomerState,
   selectEntities
 );
