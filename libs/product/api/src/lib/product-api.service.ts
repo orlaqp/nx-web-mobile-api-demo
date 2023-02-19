@@ -5,25 +5,34 @@ import { ProductEntity } from './product.entity';
 @Injectable()
 export class ProductApiService {
     constructor(
-        private readonly customerService: InMemoryDBService<ProductEntity>
+        private readonly products: InMemoryDBService<ProductEntity>
       ) {}
+
+      isEmpty() {
+        return this.products.records.length === 0;
+      }
     
       findAll() {
-        return this.customerService.getAll();
+        return this.products.getAll();
       }
     
       create(entity: Partial<ProductEntity>) {
-        const res = this.customerService.create(entity);
+        const res = this.products.create(entity);
         return res.id;
+      }
+
+      createMany(entities: Partial<ProductEntity>[]) {
+        const res = this.products.createMany(entities);
+        return res;
       }
     
       update(entity: ProductEntity) {
-        this.customerService.update(entity);
+        this.products.update(entity);
         return true;
       }
     
       delete(id: string) {
-        this.customerService.delete(id);
+        this.products.delete(id);
         return true;
       }
 }

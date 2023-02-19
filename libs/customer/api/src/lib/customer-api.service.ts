@@ -7,25 +7,34 @@ import { CustomerEntity } from './customer.entity';
 @Injectable()
 export class CustomerApiService {
   constructor(
-    private readonly customerService: InMemoryDBService<CustomerEntity>
+    private readonly customers: InMemoryDBService<CustomerEntity>
   ) {}
 
+  isEmpty() {
+    return this.customers.records.length === 0;
+  }
+
   findAll(): Observable<Customer[]> {
-    return this.customerService.getAllAsync();
+    return this.customers.getAllAsync();
   }
 
   create(entity: Partial<CustomerEntity>) {
-    const res = this.customerService.create(entity);
+    const res = this.customers.create(entity);
     return res.id;
   }
 
+  createMany(entities: Partial<CustomerEntity>[]) {
+    const res = this.customers.createMany(entities);
+    return res.map(r => r.id);
+  }
+
   update(entity: CustomerEntity) {
-    this.customerService.update(entity);
+    this.customers.update(entity);
     return true;
   }
 
   delete(id: string) {
-    this.customerService.delete(id);
+    this.customers.delete(id);
     return true;
   }
 }
