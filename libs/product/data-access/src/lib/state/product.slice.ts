@@ -1,3 +1,4 @@
+import { Product, ProductsApi } from '@nx-web-mobile-api-demo/shared/api-client';
 import { RootState } from '@nx-web-mobile-api-demo/shared/store';
 import {
   createAsyncThunk,
@@ -13,16 +14,15 @@ export const PRODUCT_FEATURE_KEY = 'product';
 /*
  * Update these interfaces according to your requirements.
  */
-export interface ProductEntity {
-  id: number;
-}
 
-export interface ProductState extends EntityState<ProductEntity> {
+export interface ProductState extends EntityState<Product> {
   loadingStatus: 'not loaded' | 'loading' | 'loaded' | 'error';
   error?: string | null;
 }
 
-export const productAdapter = createEntityAdapter<ProductEntity>();
+export const productAdapter = createEntityAdapter<Product>();
+
+const api = new ProductsApi(undefined, 'http://localhost:3333/api');
 
 /**
  * Export an effect using createAsyncThunk from
@@ -41,15 +41,11 @@ export const productAdapter = createEntityAdapter<ProductEntity>();
  * }, [dispatch]);
  * ```
  */
-export const fetchProduct = createAsyncThunk(
+export const fetchProducts = createAsyncThunk(
   'product/fetchStatus',
   async (_, thunkAPI) => {
-    /**
-     * Replace this with your custom fetch call.
-     * For example, `return myApi.getProducts()`;
-     * Right now we just return an empty array.
-     */
-    return Promise.resolve([]);
+    const res = await api.productApiControllerSearch();
+    return res.data;
   }
 );
 
@@ -70,17 +66,17 @@ export const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProduct.pending, (state: ProductState) => {
+      .addCase(fetchProducts.pending, (state: ProductState) => {
         state.loadingStatus = 'loading';
       })
       .addCase(
-        fetchProduct.fulfilled,
-        (state: ProductState, action: PayloadAction<ProductEntity[]>) => {
+        fetchProducts.fulfilled,
+        (state: ProductState, action: PayloadAction<Product[]>) => {
           productAdapter.setAll(state, action.payload);
           state.loadingStatus = 'loaded';
         }
       )
-      .addCase(fetchProduct.rejected, (state: ProductState, action) => {
+      .addCase(fetchProducts.rejected, (state: ProductState, action) => {
         state.loadingStatus = 'error';
         state.error = action.error.message;
       });
@@ -131,7 +127,7 @@ const { selectAll, selectEntities } = productAdapter.getSelectors();
 export const getProductState = (rootState: RootState): ProductState =>
   rootState[PRODUCT_FEATURE_KEY];
 
-export const selectAllProduct = createSelector(getProductState, selectAll);
+export const selectAllProducts = createSelector(getProductState, selectAll);
 
 export const selectProductEntities = createSelector(
   getProductState,

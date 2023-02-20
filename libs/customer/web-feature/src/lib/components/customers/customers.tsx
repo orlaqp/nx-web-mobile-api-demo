@@ -13,10 +13,9 @@ export interface CustomersProps {}
 export function Customers(props: CustomersProps) {
   const dispatch = useDispatch();
   const customers = useSelector(selectAllCustomers);
-  useEffect(() => { dispatch(fetchCustomers() as any) }, []);
+  useEffect(() => { dispatch(fetchCustomers() as any) }, [dispatch]);
 
   return (
-
     <List>
       { customers?.map(c => (
         <ListItem>
