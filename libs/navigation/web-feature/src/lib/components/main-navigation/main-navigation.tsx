@@ -76,6 +76,7 @@ export function MainNavigation(props: MainNavigationProps) {
                   display: 'flex',
                   flexDirection: 'column',
                   height: 240,
+                  overflow: 'auto',
                 }}
               >
                 <Customers />
@@ -89,6 +90,7 @@ export function MainNavigation(props: MainNavigationProps) {
                   display: 'flex',
                   flexDirection: 'column',
                   height: 240,
+                  overflow: 'auto',
                 }}
               >
                 <Products />

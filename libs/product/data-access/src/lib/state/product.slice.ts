@@ -22,7 +22,7 @@ export interface ProductState extends EntityState<Product> {
 
 export const productAdapter = createEntityAdapter<Product>();
 
-const api = new ProductsApi(undefined, 'http://localhost:3333/api');
+const api = new ProductsApi(undefined, 'http://localhost:3333');
 
 /**
  * Export an effect using createAsyncThunk from

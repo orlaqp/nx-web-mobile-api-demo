@@ -846,10 +846,22 @@ ul.nav-tabs {
   <script>
     // Script section to load models into a JS Var
     var defs = {}
-    defs["Customer"] = {
-  "required" : [ "emailAddress", "firstName", "lastName" ],
+    defs["CreateCustomerResponse"] = {
+  "required" : [ "id" ],
   "type" : "object",
   "properties" : {
+    "id" : {
+      "type" : "string"
+    }
+  }
+};
+    defs["Customer"] = {
+  "required" : [ "emailAddress", "firstName", "id", "lastName" ],
+  "type" : "object",
+  "properties" : {
+    "id" : {
+      "type" : "string"
+    },
     "firstName" : {
       "type" : "string"
     },
@@ -981,7 +993,7 @@ ul.nav-tabs {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/customers</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/customers</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -1003,12 +1015,14 @@ ul.nav-tabs {
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Customers-customerApiControllerCreate-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
+ -H "Accept: application/json" \
  -H "Content-Type: application/json" \
- "http://localhost/customers" \
+ "http://localhost/api/customers" \
  -d '{
   &quot;firstName&quot; : &quot;firstName&quot;,
   &quot;lastName&quot; : &quot;lastName&quot;,
-  &quot;emailAddress&quot; : &quot;emailAddress&quot;
+  &quot;emailAddress&quot; : &quot;emailAddress&quot;,
+  &quot;id&quot; : &quot;id&quot;
 }'
 </code></pre>
                           </div>
@@ -1029,7 +1043,8 @@ public class CustomersApiExample {
         Customer customer = ; // Customer | 
 
         try {
-            apiInstance.customerApiControllerCreate(customer);
+            CreateCustomerResponse result = apiInstance.customerApiControllerCreate(customer);
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling CustomersApi#customerApiControllerCreate");
             e.printStackTrace();
@@ -1048,7 +1063,8 @@ public class CustomersApiExample {
         Customer customer = ; // Customer | 
 
         try {
-            apiInstance.customerApiControllerCreate(customer);
+            CreateCustomerResponse result = apiInstance.customerApiControllerCreate(customer);
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling CustomersApi#customerApiControllerCreate");
             e.printStackTrace();
@@ -1068,7 +1084,10 @@ CustomersApi *apiInstance = [[CustomersApi alloc] init];
 Customer *customer = ; // 
 
 [apiInstance customerApiControllerCreateWith:customer
-              completionHandler: ^(NSError* error) {
+              completionHandler: ^(CreateCustomerResponse output, NSError* error) {
+    if (output) {
+        NSLog(@"%@", output);
+    }
     if (error) {
         NSLog(@"Error: %@", error);
     }
@@ -1087,7 +1106,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 };
 api.customerApiControllerCreate(customer, callback);
@@ -1116,7 +1135,8 @@ namespace Example
             var customer = new Customer(); // Customer | 
 
             try {
-                apiInstance.customerApiControllerCreate(customer);
+                CreateCustomerResponse result = apiInstance.customerApiControllerCreate(customer);
+                Debug.WriteLine(result);
             } catch (Exception e) {
                 Debug.Print("Exception when calling CustomersApi.customerApiControllerCreate: " + e.Message );
             }
@@ -1135,7 +1155,8 @@ $api_instance = new OpenAPITools\Client\Api\CustomersApi();
 $customer = ; // Customer | 
 
 try {
-    $api_instance->customerApiControllerCreate($customer);
+    $result = $api_instance->customerApiControllerCreate($customer);
+    print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CustomersApi->customerApiControllerCreate: ', $e->getMessage(), PHP_EOL;
 }
@@ -1152,7 +1173,8 @@ my $api_instance = WWW::OPenAPIClient::CustomersApi->new();
 my $customer = WWW::OPenAPIClient::Object::Customer->new(); # Customer | 
 
 eval {
-    $api_instance->customerApiControllerCreate(customer => $customer);
+    my $result = $api_instance->customerApiControllerCreate(customer => $customer);
+    print Dumper($result);
 };
 if ($@) {
     warn "Exception when calling CustomersApi->customerApiControllerCreate: $@\n";
@@ -1171,7 +1193,8 @@ api_instance = openapi_client.CustomersApi()
 customer =  # Customer | 
 
 try:
-    api_instance.customer_api_controller_create(customer)
+    api_response = api_instance.customer_api_controller_create(customer)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling CustomersApi->customerApiControllerCreate: %s\n" % e)</code></pre>
                             </div>
@@ -1265,12 +1288,52 @@ $(document).ready(function() {
 
 
                             <ul id="responses-detail-Customers-customerApiControllerCreate-201" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-Customers-customerApiControllerCreate-201-schema">Schema</a>
+                                </li>
+
+
 
 
                             </ul>
 
 
                             <div class="tab-content" id="responses-Customers-customerApiControllerCreate-201-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Customers-customerApiControllerCreate-201-schema">
+                                  <div id="responses-Customers-customerApiControllerCreate-schema-201" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = ;
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                          Object.keys(schema.properties).forEach( (item) => {
+                                            if (schema.properties[item].$ref != null) {
+                                              schema.properties[item] = defsParser.$refs.get(schema.properties[item].$ref);
+                                            }
+                                          });
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-Customers-customerApiControllerCreate-201-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Customers-customerApiControllerCreate-schema-201');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Customers-customerApiControllerCreate-201-schema-data' type='hidden' value=''></input>
+                                </div>
                             </div>
                         </article>
                       </div>
@@ -1287,7 +1350,7 @@ $(document).ready(function() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/customers</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/customers</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -1309,7 +1372,7 @@ $(document).ready(function() {
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Customers-customerApiControllerDelete-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X DELETE \
- "http://localhost/customers"
+ "http://localhost/api/customers"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Customers-customerApiControllerDelete-0-java">
@@ -1568,7 +1631,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/customers</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/customers</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -1591,7 +1654,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-Customers-customerApiControllerSearch-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: application/json" \
- "http://localhost/customers"
+ "http://localhost/api/customers"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Customers-customerApiControllerSearch-0-java">
@@ -1862,7 +1925,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/customers</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/customers</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -1885,11 +1948,12 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-Customers-customerApiControllerUpdate-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X PUT \
  -H "Content-Type: application/json" \
- "http://localhost/customers" \
+ "http://localhost/api/customers" \
  -d '{
   &quot;firstName&quot; : &quot;firstName&quot;,
   &quot;lastName&quot; : &quot;lastName&quot;,
-  &quot;emailAddress&quot; : &quot;emailAddress&quot;
+  &quot;emailAddress&quot; : &quot;emailAddress&quot;,
+  &quot;id&quot; : &quot;id&quot;
 }'
 </code></pre>
                           </div>
@@ -2171,7 +2235,7 @@ $(document).ready(function() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/orders</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/orders</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -2194,7 +2258,7 @@ $(document).ready(function() {
                           <div class="tab-pane active" id="examples-Orders-orderApiControllerCreate-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
  -H "Content-Type: application/json" \
- "http://localhost/orders" \
+ "http://localhost/api/orders" \
  -d '{
   &quot;no&quot; : &quot;no&quot;,
   &quot;total&quot; : 0.8008281904610115,
@@ -2477,7 +2541,7 @@ $(document).ready(function() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/orders</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/orders</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -2499,7 +2563,7 @@ $(document).ready(function() {
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Orders-orderApiControllerDelete-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X DELETE \
- "http://localhost/orders"
+ "http://localhost/api/orders"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Orders-orderApiControllerDelete-0-java">
@@ -2758,7 +2822,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/orders</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/orders</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -2781,7 +2845,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-Orders-orderApiControllerSearch-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: application/json" \
- "http://localhost/orders"
+ "http://localhost/api/orders"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Orders-orderApiControllerSearch-0-java">
@@ -3052,7 +3116,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/orders</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/orders</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -3075,7 +3139,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-Orders-orderApiControllerUpdate-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X PUT \
  -H "Content-Type: application/json" \
- "http://localhost/orders" \
+ "http://localhost/api/orders" \
  -d '{
   &quot;no&quot; : &quot;no&quot;,
   &quot;total&quot; : 0.8008281904610115,
@@ -3361,7 +3425,7 @@ $(document).ready(function() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/products</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/products</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -3384,7 +3448,7 @@ $(document).ready(function() {
                           <div class="tab-pane active" id="examples-Products-productApiControllerCreate-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
  -H "Content-Type: application/json" \
- "http://localhost/products" \
+ "http://localhost/api/products" \
  -d '{
   &quot;price&quot; : 0.8008281904610115,
   &quot;name&quot; : &quot;name&quot;
@@ -3666,7 +3730,7 @@ $(document).ready(function() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/products</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/products</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -3688,7 +3752,7 @@ $(document).ready(function() {
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Products-productApiControllerDelete-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X DELETE \
- "http://localhost/products"
+ "http://localhost/api/products"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Products-productApiControllerDelete-0-java">
@@ -3947,7 +4011,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/products</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/products</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -3970,7 +4034,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-Products-productApiControllerSearch-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: application/json" \
- "http://localhost/products"
+ "http://localhost/api/products"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Products-productApiControllerSearch-0-java">
@@ -4241,7 +4305,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/products</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/products</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -4264,7 +4328,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-Products-productApiControllerUpdate-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X PUT \
  -H "Content-Type: application/json" \
- "http://localhost/products" \
+ "http://localhost/api/products" \
  -d '{
   &quot;price&quot; : 0.8008281904610115,
   &quot;name&quot; : &quot;name&quot;

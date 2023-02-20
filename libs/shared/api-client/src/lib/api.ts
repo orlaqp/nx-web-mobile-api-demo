@@ -26,9 +26,28 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 /**
  * 
  * @export
+ * @interface CreateCustomerResponse
+ */
+export interface CreateCustomerResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCustomerResponse
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
  * @interface Customer
  */
 export interface Customer {
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'id': string;
     /**
      * 
      * @type {string}
@@ -108,7 +127,7 @@ export const CustomersApiAxiosParamCreator = function (configuration?: Configura
         customerApiControllerCreate: async (customer: Customer, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'customer' is not null or undefined
             assertParamExists('customerApiControllerCreate', 'customer', customer)
-            const localVarPath = `/customers`;
+            const localVarPath = `/api/customers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -143,7 +162,7 @@ export const CustomersApiAxiosParamCreator = function (configuration?: Configura
         customerApiControllerDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('customerApiControllerDelete', 'id', id)
-            const localVarPath = `/customers`
+            const localVarPath = `/api/customers`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -173,7 +192,7 @@ export const CustomersApiAxiosParamCreator = function (configuration?: Configura
          * @throws {RequiredError}
          */
         customerApiControllerSearch: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/customers`;
+            const localVarPath = `/api/customers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -205,7 +224,7 @@ export const CustomersApiAxiosParamCreator = function (configuration?: Configura
         customerApiControllerUpdate: async (customer: Customer, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'customer' is not null or undefined
             assertParamExists('customerApiControllerUpdate', 'customer', customer)
-            const localVarPath = `/customers`;
+            const localVarPath = `/api/customers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -247,7 +266,7 @@ export const CustomersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async customerApiControllerCreate(customer: Customer, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async customerApiControllerCreate(customer: Customer, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateCustomerResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.customerApiControllerCreate(customer, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -296,7 +315,7 @@ export const CustomersApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        customerApiControllerCreate(customer: Customer, options?: any): AxiosPromise<void> {
+        customerApiControllerCreate(customer: Customer, options?: any): AxiosPromise<CreateCustomerResponse> {
             return localVarFp.customerApiControllerCreate(customer, options).then((request) => request(axios, basePath));
         },
         /**
@@ -395,7 +414,7 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
         orderApiControllerCreate: async (order: Order, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'order' is not null or undefined
             assertParamExists('orderApiControllerCreate', 'order', order)
-            const localVarPath = `/orders`;
+            const localVarPath = `/api/orders`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -430,7 +449,7 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
         orderApiControllerDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('orderApiControllerDelete', 'id', id)
-            const localVarPath = `/orders`
+            const localVarPath = `/api/orders`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -460,7 +479,7 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
          * @throws {RequiredError}
          */
         orderApiControllerSearch: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/orders`;
+            const localVarPath = `/api/orders`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -492,7 +511,7 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
         orderApiControllerUpdate: async (order: Order, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'order' is not null or undefined
             assertParamExists('orderApiControllerUpdate', 'order', order)
-            const localVarPath = `/orders`;
+            const localVarPath = `/api/orders`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -682,7 +701,7 @@ export const ProductsApiAxiosParamCreator = function (configuration?: Configurat
         productApiControllerCreate: async (product: Product, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'product' is not null or undefined
             assertParamExists('productApiControllerCreate', 'product', product)
-            const localVarPath = `/products`;
+            const localVarPath = `/api/products`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -717,7 +736,7 @@ export const ProductsApiAxiosParamCreator = function (configuration?: Configurat
         productApiControllerDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('productApiControllerDelete', 'id', id)
-            const localVarPath = `/products`
+            const localVarPath = `/api/products`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -747,7 +766,7 @@ export const ProductsApiAxiosParamCreator = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         productApiControllerSearch: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/products`;
+            const localVarPath = `/api/products`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -779,7 +798,7 @@ export const ProductsApiAxiosParamCreator = function (configuration?: Configurat
         productApiControllerUpdate: async (product: Product, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'product' is not null or undefined
             assertParamExists('productApiControllerUpdate', 'product', product)
-            const localVarPath = `/products`;
+            const localVarPath = `/api/products`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;

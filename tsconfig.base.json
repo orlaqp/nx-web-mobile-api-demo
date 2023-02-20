@@ -53,7 +53,12 @@
       "@nx-web-mobile-api-demo/shared/api-client": [
         "libs/shared/api-client/src/index.ts"
       ],
-      "@nx-web-mobile-api-demo/shared/store": ["libs/shared/store/src/index.ts"]
+      "@nx-web-mobile-api-demo/shared/store": [
+        "libs/shared/store/src/index.ts"
+      ],
+      "@nx-web-mobile-api-demo/shared/ui/web": [
+        "libs/shared/ui/web/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

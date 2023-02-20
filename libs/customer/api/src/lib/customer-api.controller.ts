@@ -1,8 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { ApiBody, ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiCreatedResponse, ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CustomerApiService } from './customer-api.service';
-import { Customer } from './customer.dto';
-import { CustomerEntity } from './customer.entity';
+import { Customer } from './model/customer.dto';
+import { CustomerEntity } from './model/customer.entity';
+import { CreateCustomerResponse } from './model/create-customer.response';
 
 @ApiTags('customers')
 @Controller('customers')
@@ -16,6 +17,7 @@ export class CustomerApiController {
   }
 
   @ApiBody({ type: Customer })
+  @ApiCreatedResponse({ type: CreateCustomerResponse })
   @Post()
   create(@Body() entity: Partial<Customer>) {
     return this.customerApiService.create(entity);

@@ -23,11 +23,11 @@ async function runProcess(input, message) {
 async function generateCode() {
     await download(url, output);
     runProcess(
-        `npx openapi-generator-cli generate -i api.json -g typescript-axios -o ${folderOutput}`,
+        `npx @openapitools/openapi-generator-cli generate -i api.json -g typescript-axios -o ${folderOutput}`,
         'API Client library completed.'
     );
     runProcess(
-        `npx openapi-generator-cli generate -i api.json -g html2 -o ${folderOutput}`,
+        `npx @openapitools/openapi-generator-cli generate -i api.json -g html2 -o ${folderOutput}`,
         'API Documentation completed.'
     );
 }

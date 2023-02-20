@@ -8,6 +8,7 @@ import {
   EntityState,
   PayloadAction,
 } from '@reduxjs/toolkit';
+import { CreateCustomerResponse } from 'libs/customer/api/src/lib/model/create-customer.response';
 
 export const CUSTOMER_FEATURE_KEY = 'customer';
 
@@ -17,12 +18,14 @@ export const CUSTOMER_FEATURE_KEY = 'customer';
 
 export interface CustomerState extends EntityState<Customer> {
   loadingStatus: 'not loaded' | 'loading' | 'loaded' | 'error';
+  creatingStatus: 'idle' | 'saving' | 'error';
+  showCreateForm: boolean;
   error?: string | null;
 }
 
 export const customerAdapter = createEntityAdapter<Customer>();
 
-const api = new CustomersApi(undefined, 'http://localhost:3333/api');
+const api = new CustomersApi(undefined, 'http://localhost:3333');
 
 /**
  * Export an effect using createAsyncThunk from
@@ -49,9 +52,22 @@ export const fetchCustomers = createAsyncThunk(
   }
 );
 
+export const createCustomer = createAsyncThunk(
+  'customer/createStatus',
+  async (c: Customer, thunkAPI) => {
+    const res = await api.customerApiControllerCreate(c);
+    return {
+      ...c,
+      id: res.data.id
+    }
+  }
+);
+
 export const initialCustomerState: CustomerState =
   customerAdapter.getInitialState({
     loadingStatus: 'not loaded',
+    creatingStatus: 'idle',
+    showCreateForm: false,
     error: null,
   });
 
@@ -61,6 +77,9 @@ export const customerSlice = createSlice({
   reducers: {
     add: customerAdapter.addOne,
     remove: customerAdapter.removeOne,
+    showCustomerForm: (state: CustomerState) => {
+      state.showCreateForm = true
+    },
     // ...
   },
   extraReducers: (builder) => {
@@ -77,6 +96,24 @@ export const customerSlice = createSlice({
       )
       .addCase(fetchCustomers.rejected, (state: CustomerState, action) => {
         state.loadingStatus = 'error';
+        state.error = action.error.message;
+      })
+
+      // create
+
+      .addCase(createCustomer.pending, (state: CustomerState) => {
+        state.creatingStatus = 'saving';
+      })
+      .addCase(
+        createCustomer.fulfilled,
+        (state: CustomerState, action: PayloadAction<Customer>) => {
+          customerAdapter.addOne(state, action.payload);
+          state.creatingStatus = 'idle';
+          state.showCreateForm = false;
+        }
+      )
+      .addCase(createCustomer.rejected, (state: CustomerState, action) => {
+        state.creatingStatus = 'error';
         state.error = action.error.message;
       });
   },
@@ -132,3 +169,9 @@ export const selectCustomers = createSelector(
   getCustomerState,
   selectEntities
 );
+
+export const selectShowCustomerForm = createSelector(
+  getCustomerState,
+  (state: CustomerState) => state.showCreateForm
+);
+

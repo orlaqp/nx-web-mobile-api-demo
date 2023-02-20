@@ -1,8 +1,8 @@
 import { InMemoryDBService } from '@nestjs-addons/in-memory-db';
 import { Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { Customer } from './customer.dto';
-import { CustomerEntity } from './customer.entity';
+import { Customer } from './model/customer.dto';
+import { CustomerEntity } from './model/customer.entity';
 
 @Injectable()
 export class CustomerApiService {
@@ -20,7 +20,7 @@ export class CustomerApiService {
 
   create(entity: Partial<CustomerEntity>) {
     const res = this.customers.create(entity);
-    return res.id;
+    return { id: res.id };
   }
 
   createMany(entities: Partial<CustomerEntity>[]) {
